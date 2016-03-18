@@ -48,6 +48,23 @@ public class UIManager : MonoBehaviour
 	}
 
 
+	protected void Start()
+	{
+		List<string> a = new List<string>();
+		a.Add("d");
+		a.Add("e");
+		a.Add("f");
+
+		LazyIterator i = new LazyIterator();
+		string key = i.RegisterEnumerable(a, LazyIterator.IterativeMode.Loop);
+
+		Debug.Log(i.GetNext<string>(key));
+      	Debug.Log(i.GetNext<string>(key));
+    	Debug.Log(i.GetNext<string>(key));
+      	Debug.Log(i.GetNext<string>(key));
+	}
+
+
 	/// <summary>
 	/// Assumes that UI script attached to a canvas gameobject has the same class name as the prefab name
 	/// </summary>
@@ -55,7 +72,6 @@ public class UIManager : MonoBehaviour
 	{
 		return LoadUI<T> (typeof(T).Name, persistent);
 	}
-	
 
 	public T LoadUI<T> (string prefabName, bool persistent) where T :  Component
 	{
