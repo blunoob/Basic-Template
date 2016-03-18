@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using System;
 using System.IO;
 using UnityEngine;
 using System.Collections;
@@ -13,7 +19,6 @@ public static class FileIO
 		else {
 			StreamWriter sw = File.CreateText (filePath);
 			sw.WriteLine (content);
-
 			sw.Close ();
 		}
 	}

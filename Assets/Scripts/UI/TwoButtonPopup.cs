@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;

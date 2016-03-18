@@ -1,6 +1,13 @@
-﻿using System;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public static class Extensions
 {
@@ -16,6 +23,14 @@ public static class Extensions
 		yield return new WaitForSeconds (delay);
 		
 		action ();
+	}
+
+	//**********************************************************************************************//
+
+	public static T GetRandom <T>(this IList<T> list)
+	{
+		int randomIndex = UnityEngine.Random.Range(0, list.Count);
+		return list[randomIndex];
 	}
 
 	//**********************************************************************************************//
