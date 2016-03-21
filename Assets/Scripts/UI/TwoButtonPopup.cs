@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class TwoButtonPopup : MonoBehaviour 
+public class TwoButtonPopup : UIMonoBehaviour 
 {
 	[SerializeField]
 	private Text _messageBox;
@@ -35,13 +35,11 @@ public class TwoButtonPopup : MonoBehaviour
 
 	public void OnClickButton1()
 	{
-		if(_button1Action != null)
-			_button1Action();
+		ExecuteAction(_button1Action);
 	}
 
 	public void OnClickButton2()
 	{
-		if(_button2Action != null)
-			_button2Action();
+		ExecuteAction(_button2Action);
 	}
 }

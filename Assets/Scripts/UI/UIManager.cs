@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
 {
 	private const string UI_PREFAB_PATH = "Prefabs/UI/";
 
-	public UIManager _instance	{	private set; get;}
+	public static UIManager _instance	{	private set; get;}
 
 	protected Dictionary<string, object> _persistentUIs;
 

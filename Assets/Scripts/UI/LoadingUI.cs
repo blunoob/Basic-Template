@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class LoadingUI : MonoBehaviour 
+public class LoadingUI : UIMonoBehaviour 
 {
 	public Text _tipMessage;
 
@@ -23,13 +23,17 @@ public class LoadingUI : MonoBehaviour
 	}
 
 
+	protected void Start()
+	{
+		_tipMessage.text = _tipMessages.GetRandom();
+	}
+
 	public void Show()
 	{
 		Show (_tipMessages.GetRandom());
 	}
 
-
-	public void Show(string tipMessage)
+	private void Show(string tipMessage)
 	{
 		if(!gameObject.activeInHierarchy)
 		{
