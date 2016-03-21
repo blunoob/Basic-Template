@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
 	protected void PlayGame()
 	{
-		//TODO ... Put your code here and remove the following code.
+		//TODO ... Put your code here. You may want to remove the following code.
 
 		UIManager._instance.DestroyUI<MainMenu>();
 		UIManager._instance.LoadUI<TwoButtonPopup>().Show("You sure?", "Yes", () => {
