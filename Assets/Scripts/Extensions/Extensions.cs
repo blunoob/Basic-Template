@@ -88,4 +88,18 @@ public static class Extensions
 
 	//**********************************************************************************************//
 
+	public static Dictionary<T,U> ToDictionary <T,U> (this IDictionary source)
+	{
+		Dictionary<T,U> genericDictionary = new Dictionary<T, U>();
+		IEnumerator iter = source.Keys.GetEnumerator();
+
+		while(iter.MoveNext())
+		{ 
+			T key = (T) iter.Current;
+			U value = (U) (source[iter.Current]);
+			genericDictionary.Add(key, value);
+		}
+
+		return genericDictionary;
+	}
 }

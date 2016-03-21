@@ -14,20 +14,15 @@ public static class FileIO
 	public static void WriteToPersistentStorage(string fileName, string content)
 	{
 		string filePath = Application.persistentDataPath + "/" + fileName;
-		if(File.Exists(filePath))
-			File.WriteAllText(filePath, content);
-		else {
-			StreamWriter sw = File.CreateText (filePath);
-			sw.WriteLine (content);
-			sw.Close ();
-		}
+
+		WriteToPath(filePath, content);
 	}
 
 
 	public static string ReadFromPersistentStorage(string fileName)
 	{
 		string filePath = Application.persistentDataPath + "/" + fileName;
-		return File.ReadAllText(filePath);
+		return ReadFromPath(filePath);
 	}
 
 
@@ -35,5 +30,22 @@ public static class FileIO
 	{
 		string filePath = Application.persistentDataPath + "/" + fileName;
 		return File.Exists(filePath);
+	}
+
+
+	public static void WriteToPath(string fileNameWithPath, string content)
+	{
+		if(File.Exists(fileNameWithPath))
+			File.WriteAllText(fileNameWithPath, content);
+		else {
+			StreamWriter sw = File.CreateText (fileNameWithPath);
+			sw.WriteLine (content);
+			sw.Close ();
+		}
+	}
+
+	public static string ReadFromPath(string fileNameWithPath)
+	{
+		return File.ReadAllText(fileNameWithPath);
 	}
 }
