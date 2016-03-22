@@ -1,1 +1,1 @@
-{"aaa":"asdf","dd":"ff","":""}
+{"Yes":"Yes","No":"No","Play":"Play","Settings":"Settings","":""}

@@ -102,4 +102,23 @@ public static class Extensions
 
 		return genericDictionary;
 	}
+
+	//**********************************************************************************************//
+
+	public static Dictionary<T,U> DuplicateKeys <T,U>(this Dictionary<T,U> source)
+	{
+		Dictionary<T,U> copy = new Dictionary<T, U>();
+
+		IEnumerator iter = source.Keys.GetEnumerator();
+
+		while(iter.MoveNext())
+		{
+			T key = (T) iter.Current;
+			copy.Add(key, default(U));
+		}
+
+		return copy;
+	}
+
+	//**********************************************************************************************//
 }

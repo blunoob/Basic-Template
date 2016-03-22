@@ -48,4 +48,9 @@ public static class FileIO
 	{
 		return File.ReadAllText(fileNameWithPath);
 	}
+
+	public static void DeleteFile(string fileWithPath)
+	{
+		File.Delete(fileWithPath);
+	}
 }

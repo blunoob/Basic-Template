@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System.Collections;
@@ -9,10 +10,14 @@ public class LocalizationEditor : EditorWindow
 	private const string SETTINGS_ASSET_KEY = "LocalizationSettings";
 	private const string ASSET_PATH = "Assets/Localization/LocalizationSettings.asset";
 
+	private Vector2 _mainScrollPos = new Vector2(10, 10);
+
+	protected static EditorWindow _mainWindow;
+
 	[MenuItem ("Window/LocalizationManager")]
 	public static void Show()
 	{
-		EditorWindow.GetWindow<LocalizationEditor>(SETTINGS_ASSET_KEY);
+		_mainWindow = EditorWindow.GetWindow<LocalizationEditor>(SETTINGS_ASSET_KEY);
 		LocalizationSettings asset = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(ASSET_PATH);
 
 		if(asset == null) {
@@ -30,14 +35,37 @@ public class LocalizationEditor : EditorWindow
 
 	protected void OnGUI ()
 	{
-		LocalizationSettings localeSettings = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(EditorPrefs.GetString(SETTINGS_ASSET_KEY));
+		_mainScrollPos = EditorGUILayout.BeginScrollView(_mainScrollPos);
 
+		LocalizationSettings localeSettings = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(EditorPrefs.GetString(SETTINGS_ASSET_KEY));
+		ManageDefaultDictionary(localeSettings);
+
+		EditorGUILayout.Space();
+		EditorGUILayout.Space();
+		EditorGUILayout.Space();
+
+		ManageLanguages(localeSettings);
+
+		EditorGUILayout.EndScrollView();
+	}
+
+	protected GUIStyle SmallHeadingStyle()
+	{
+		GUIStyle s = new GUIStyle();
+		s.fontSize = 14;
+		s.fontStyle = FontStyle.Bold;
+		return s;
+	}
+
+	protected void ManageDefaultDictionary(LocalizationSettings localeSettings)
+	{
 		if(localeSettings._keyToDefaultDictionary == null)
 			localeSettings.LoadFromFile();
 
 		List<KeyValuePair<string, string>> list = localeSettings._keyToDefaultDictionary.ToList();
 
-		EditorGUILayout.LabelField("Defined Keys");
+		EditorGUILayout.Space();
+		EditorGUILayout.LabelField("Defined Keys", SmallHeadingStyle());
 		EditorGUILayout.Space();
 
 		EditorGUILayout.BeginHorizontal();
@@ -76,13 +104,117 @@ public class LocalizationEditor : EditorWindow
 		}
 
 		localeSettings._keyToDefaultDictionary = list.Distinct().ToDictionary(pair => pair.Key, pair => pair.Value);
+
 	}
+
+	protected void ManageLanguages(LocalizationSettings localeSettings)
+	{
+		EditorGUILayout.BeginHorizontal();
+		ShowAddLanguageMenu(localeSettings);
+		EditorGUILayout.Space();
+		ShowAddedLanguages(localeSettings);
+		EditorGUILayout.EndHorizontal();
+	}
+
+	protected bool _toggle;
+	protected bool Toggle()
+	{
+		_toggle = !_toggle;
+		return _toggle;
+	}
+
+	protected void ShowAddLanguageMenu (LocalizationSettings localeSettings)
+	{
+		EditorGUILayout.BeginVertical(GUI.skin.customStyles[9], GUILayout.Width(300));
+		EditorGUILayout.LabelField("Available languages", SmallHeadingStyle());
+		EditorGUILayout.Space();
+		_languagesScrollPos = GUILayout.BeginScrollView(_languagesScrollPos, false, true, GUILayout.Width(300), 
+			GUILayout.Height(240));
+
+		SystemLanguage [] systemLanguages = (SystemLanguage []) Enum.GetValues(typeof(SystemLanguage));
+		for(int i = 0; i < systemLanguages.Length; i++)
+		{
+			if(localeSettings._localizedLanguages.Contains(systemLanguages[i]))
+				continue;
+			
+			EditorGUILayout.BeginHorizontal(GUI.skin.customStyles[Toggle() ? 3 : 9]);
+
+			EditorGUILayout.LabelField(systemLanguages[i].ToString());
+			if(GUILayout.Button("Add", SmallButtonStyle()))
+			{
+				if(!localeSettings._localizedLanguages.Contains(systemLanguages[i])) {
+					localeSettings.AddLanguage(systemLanguages[i]);
+				}
+
+				EditorUtility.SetDirty(localeSettings);
+				AssetDatabase.SaveAssets();
+			}
+				
+			EditorGUILayout.EndHorizontal();
+		}
+
+		GUILayout.EndScrollView();
+		EditorGUILayout.EndVertical();
+	}
+
+
+	protected void ShowAddedLanguages (LocalizationSettings localeSettings)
+	{
+		// TODO ... Show menu for 1. removing a language 2. Updating a language ...
+		EditorGUILayout.BeginVertical();
+
+		EditorGUILayout.LabelField("Defined Languages :", SmallHeadingStyle());
+
+		EditorGUILayout.Space();
+
+		_myLanguagesScrollPos = GUILayout.BeginScrollView(_myLanguagesScrollPos, false, false, GUILayout.Width(400), 
+			GUILayout.Height(240));
+		
+		if(localeSettings._localizedLanguages.Count == 0) {
+			EditorGUILayout.LabelField("None");
+			EditorGUILayout.Space();
+		}
+
+		for(int i = 0; i < localeSettings._localizedLanguages.Count; i++)
+		{
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.LabelField(localeSettings._localizedLanguages[i].ToString());
+			if(GUILayout.Button("Edit", SmallButtonStyle()))
+			{
+				LanguageEditor e = EditorWindow.GetWindow<LanguageEditor>(localeSettings._localizedLanguages[i].ToString(), 
+					true, typeof(LocalizationEditor));
+				
+				e.LoadWithSettings(localeSettings._localizedLanguages[i], localeSettings);
+				// TODO ... Open a tab and allow editing a language...
+			}
+
+			if(GUILayout.Button("Remove", SmallButtonStyle()))
+			{
+				localeSettings.RemoveLanguage(localeSettings._localizedLanguages[i]);
+			}
+			EditorGUILayout.EndHorizontal();
+		}
+		GUILayout.EndScrollView();
+		EditorGUILayout.EndVertical();
+	}
+
+	protected Vector2 _languagesScrollPos = new Vector2(40, 160);
+	protected Vector2 _myLanguagesScrollPos = new Vector2(40, 160);
+
 
 	protected GUIStyle SimpleButtonStyle()
 	{
 		GUIStyle buttonStyle = GUI.skin.button;
 		buttonStyle.fixedHeight = 30;
 		buttonStyle.fixedWidth = 100;
+		return buttonStyle;
+	}
+
+	protected GUIStyle SmallButtonStyle()
+	{
+		GUIStyle buttonStyle = GUI.skin.button;
+		buttonStyle.fixedHeight = 20;
+		buttonStyle.fixedWidth = 60;
 		return buttonStyle;
 	}
 }
