@@ -46,7 +46,14 @@ public static class FileIO
 
 	public static string ReadFromPath(string fileNameWithPath)
 	{
-		return File.ReadAllText(fileNameWithPath);
+		try
+		{
+			return File.ReadAllText(fileNameWithPath);
+		} catch (Exception e)
+		{
+			Debug.LogWarning(e);
+		}
+		return null;
 	}
 
 	public static void DeleteFile(string fileWithPath)

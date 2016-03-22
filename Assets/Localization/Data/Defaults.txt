@@ -1,1 +1,1 @@
-{"Yes":"Yes","No":"No","Play":"Play","Settings":"Settings","":""}
+{"Yes":"Yes","No":"No","Play":"Play","Settings":"EngSett"}

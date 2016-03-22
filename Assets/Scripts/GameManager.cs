@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 	{
 		UIManager._instance.LoadUI<LoadingUI>(true);
 		this.PerformActionWithDelay(2f, ContinueGame);
+
+		LocalizationManager._instance.LoadLanguage();
+		Debug.Log("Arabic str > "+LocalizationManager._instance.GetLocalizedString("Yes"));
 	}
 
 	protected void ContinueGame ()

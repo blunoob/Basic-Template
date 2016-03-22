@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class LocalizationEditor : EditorWindow 
 {
 	private const string SETTINGS_ASSET_KEY = "LocalizationSettings";
-	private const string ASSET_PATH = "Assets/Localization/LocalizationSettings.asset";
+//	private const string ASSET_PATH = "Assets/Localization/LocalizationSettings.asset";
 
 	private Vector2 _mainScrollPos = new Vector2(10, 10);
 
@@ -18,17 +18,10 @@ public class LocalizationEditor : EditorWindow
 	public static void Show()
 	{
 		_mainWindow = EditorWindow.GetWindow<LocalizationEditor>(SETTINGS_ASSET_KEY);
-		LocalizationSettings asset = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(ASSET_PATH);
 
-		if(asset == null) {
-			asset = ScriptableObject.CreateInstance<LocalizationSettings>();
-			asset.LoadFromFile();
+		LocalizationSettings asset = LocalizationSettings.GetSettings();
+		_mainWindow.Focus();
 
-			AssetDatabase.CreateAsset(asset, ASSET_PATH);
-			AssetDatabase.SaveAssets();
-		}
-
-		EditorUtility.FocusProjectWindow();
 		EditorPrefs.SetString(SETTINGS_ASSET_KEY, AssetDatabase.GetAssetPath(asset));
 		Selection.activeObject = asset;
 	}
@@ -49,13 +42,6 @@ public class LocalizationEditor : EditorWindow
 		EditorGUILayout.EndScrollView();
 	}
 
-	protected GUIStyle SmallHeadingStyle()
-	{
-		GUIStyle s = new GUIStyle();
-		s.fontSize = 14;
-		s.fontStyle = FontStyle.Bold;
-		return s;
-	}
 
 	protected void ManageDefaultDictionary(LocalizationSettings localeSettings)
 	{
@@ -90,6 +76,7 @@ public class LocalizationEditor : EditorWindow
 			list.Add(new KeyValuePair<string, string>("Key", "Value"));
 
 
+		localeSettings._keyToDefaultDictionary = list.Distinct().ToDictionary(pair => pair.Key, pair => pair.Value);
 
 		if(GUILayout.Button("Save"))
 		{
@@ -99,11 +86,10 @@ public class LocalizationEditor : EditorWindow
 					list.RemoveAt(i);
 			}
 
+			localeSettings._keyToDefaultDictionary = list.Distinct().ToDictionary(pair => pair.Key, pair => pair.Value);
 			AssetDatabase.SaveAssets();
 			localeSettings.WriteToFile();
 		}
-
-		localeSettings._keyToDefaultDictionary = list.Distinct().ToDictionary(pair => pair.Key, pair => pair.Value);
 
 	}
 
@@ -157,6 +143,11 @@ public class LocalizationEditor : EditorWindow
 		EditorGUILayout.EndVertical();
 	}
 
+	private void SaveAsset(UnityEngine.Object obj)
+	{
+		EditorUtility.SetDirty(obj);
+		AssetDatabase.SaveAssets();
+	}
 
 	protected void ShowAddedLanguages (LocalizationSettings localeSettings)
 	{
@@ -191,6 +182,7 @@ public class LocalizationEditor : EditorWindow
 			if(GUILayout.Button("Remove", SmallButtonStyle()))
 			{
 				localeSettings.RemoveLanguage(localeSettings._localizedLanguages[i]);
+				SaveAsset(localeSettings);
 			}
 			EditorGUILayout.EndHorizontal();
 		}
@@ -202,7 +194,17 @@ public class LocalizationEditor : EditorWindow
 	protected Vector2 _myLanguagesScrollPos = new Vector2(40, 160);
 
 
-	protected GUIStyle SimpleButtonStyle()
+	public static GUIStyle SmallHeadingStyle()
+	{
+		GUIStyle s = new GUIStyle();
+		s.fontSize = 14;
+		s.fontStyle = FontStyle.Bold;
+		return s;
+	}
+
+
+
+	public static GUIStyle SimpleButtonStyle()
 	{
 		GUIStyle buttonStyle = GUI.skin.button;
 		buttonStyle.fixedHeight = 30;
@@ -210,7 +212,7 @@ public class LocalizationEditor : EditorWindow
 		return buttonStyle;
 	}
 
-	protected GUIStyle SmallButtonStyle()
+	public static GUIStyle SmallButtonStyle()
 	{
 		GUIStyle buttonStyle = GUI.skin.button;
 		buttonStyle.fixedHeight = 20;

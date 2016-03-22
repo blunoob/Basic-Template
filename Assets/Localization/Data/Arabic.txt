@@ -1,1 +1,1 @@
-{"Yes":null,"No":null,"Play":null,"Settings":null,"":null}
+{"Yes":"AR YES","No":"AR NO","Play":"AR PLAY","Settings":null}

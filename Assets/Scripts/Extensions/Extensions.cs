@@ -105,6 +105,9 @@ public static class Extensions
 
 	//**********************************************************************************************//
 
+	/// <summary>
+	/// Duplicates a dictionary with empty values.
+	/// </summary>
 	public static Dictionary<T,U> DuplicateKeys <T,U>(this Dictionary<T,U> source)
 	{
 		Dictionary<T,U> copy = new Dictionary<T, U>();
