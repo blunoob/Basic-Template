@@ -1,4 +1,4 @@
-<b># 3D Game - Setup Kit/Modules ( for 3D games )</b>
+<b># Game Template </b>
 
 A boilerplate project that many games could take advantage of. I used some portions of it in my game projects, now writing it so that its more usable in projects to come.
 
@@ -17,16 +17,12 @@ Module/Feature list :
 <br>
 5. Lazy (IEnumerator) iterator script
 <br>
-<br>
-
-Current task :
-<br>
-Localization module
+6. Localization Manager (via simple editor)
 <br>
 <br>
 Planned tasks:
 <br>
-1. Popular Ads networks integration-ready (Mobile)
+1. Popular Ads networks integration-ready (Mobile) (not sure if it should be there)
 2. <br>
 2. I'll think of something else :)
 
