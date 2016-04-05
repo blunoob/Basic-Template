@@ -1,10 +1,20 @@
-﻿using System;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using System;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
+/// <summary>
+/// This custom editor kicks in when you go to localizationManager from Window>LocalizationManager. 
+/// The editor lets you add more languages for localization, as well as define the localized text.
+/// </summary>
 public class LocalizationEditor : EditorWindow 
 {
 	private const string SETTINGS_ASSET_KEY = "LocalizationSettings";

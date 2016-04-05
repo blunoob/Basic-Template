@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using UnityEngine;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +12,6 @@ using System.Collections.Generic;
 [System.Serializable]
 public class LocalizationSettings : ScriptableObject
 {
-	private const string SAVED_LANG_KEY = "SavedLanguages";
 	public const string DATA_PATH = "Assets/Resources/Localization/Data/";
 	private const string DEFAULTS_FILE = "Defaults";
 	private const string FILE_SUFFIX = ".txt";
@@ -27,12 +32,14 @@ public class LocalizationSettings : ScriptableObject
 		FileIO.WriteToPath(DATA_PATH + lang.ToString() + FILE_SUFFIX, MiniJSON.Json.Serialize(_keyToDefaultDictionary.DuplicateKeys()));
 	}
 
+
 	public string GetDefaultValue(string key)
 	{
 		if(_keyToDefaultDictionary.ContainsKey(key))
 			return _keyToDefaultDictionary[key];
 		return null;
 	}
+
 
 	public void RemoveLanguage(SystemLanguage lang)
 	{
@@ -42,6 +49,17 @@ public class LocalizationSettings : ScriptableObject
 		}
 	}
 
+
+	public void SaveLanguage(SystemLanguage lang, Dictionary<string, string> dictionary)
+	{
+		FileIO.WriteToPath(DATA_PATH + lang.ToString() + FILE_SUFFIX, MiniJSON.Json.Serialize(dictionary));
+	}
+
+
+	public void WriteToFile()
+	{
+		FileIO.WriteToPath(DATA_PATH + DEFAULTS_FILE + FILE_SUFFIX, MiniJSON.Json.Serialize(_keyToDefaultDictionary));
+	}
 
 	public Dictionary<string, string> GetLanguageDictionary(SystemLanguage lang)
 	{
@@ -59,18 +77,6 @@ public class LocalizationSettings : ScriptableObject
 
 		IDictionary langDictionary = MiniJSON.Json.Deserialize(fileContent) as IDictionary;
 		return langDictionary.ToDictionary<string, string>();
-	}
-
-
-	public void SaveLanguage(SystemLanguage lang, Dictionary<string, string> dictionary)
-	{
-		FileIO.WriteToPath(DATA_PATH + lang.ToString() + FILE_SUFFIX, MiniJSON.Json.Serialize(dictionary));
-	}
-
-
-	public void WriteToFile()
-	{
-		FileIO.WriteToPath(DATA_PATH + DEFAULTS_FILE + FILE_SUFFIX, MiniJSON.Json.Serialize(_keyToDefaultDictionary));
 	}
 
 

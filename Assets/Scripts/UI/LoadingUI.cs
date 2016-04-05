@@ -17,6 +17,9 @@ public class LoadingUI : UIMonoBehaviour
 	static LoadingUI()
 	{
 		_tipMessages = new List<string>();
+
+		// The text added here should ideally be just keys against which there are localized string values predefined in the 
+		// LocalizationManager editor (Window>LocalizationManager).
 		_tipMessages.Add("Yes");
 		_tipMessages.Add("Relax");
 		_tipMessages.Add("Flaming is discouraged.");
@@ -28,10 +31,12 @@ public class LoadingUI : UIMonoBehaviour
 		_tipMessage.text = LocalizationManager._instance.GetLocalizedString(_tipMessages.GetRandom());
 	}
 
+
 	public void Show()
 	{
 		Show (_tipMessages.GetRandom());
 	}
+
 
 	private void Show(string tipMessage)
 	{

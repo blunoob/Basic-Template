@@ -43,6 +43,7 @@ public static class Extensions
 		action ((T)parameters[0]);
 	}
 
+
 	/// <summary>
 	/// Calls a method (2 parameters) with delay. Avoiding reflection, so order of parameters needs to match.
 	/// </summary>
@@ -60,6 +61,7 @@ public static class Extensions
 
 	//**********************************************************************************************//
 
+
 	/// <summary>
 	/// Gets a random item from a list.
 	/// </summary>
@@ -70,6 +72,7 @@ public static class Extensions
 	}
 
 	//**********************************************************************************************//
+
 
 	/// <summary>
 	/// Shuffles the element order of the specified list. Taken from Smooth Foundations (has O(n) complexity)
@@ -87,6 +90,7 @@ public static class Extensions
 	}
 
 	//**********************************************************************************************//
+
 
 	public static Dictionary<T,U> ToDictionary <T,U> (this IDictionary source)
 	{

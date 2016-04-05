@@ -5,7 +5,7 @@
 */
 
 /// <summary>
-/// Meant for use with UGUI in 3D games only. Instantiates, deletes, and organizes your canvases inside a single parent,
+/// Meant for use with UGUI only. Instantiates, deletes, and organizes your canvases inside a single parent,
 /// increasing readibility and ease of management.
 /// 
 /// There were some assumptions made in writing this code and to me, they add more ease than trouble.
@@ -13,7 +13,7 @@
 /// </summary>
 
 /// <remarks>
-/// Meant only for 3d games and requires a GameObject, with this script on it, in the VERY first scene.
+/// Meant only for UI elements and requires a GameObject, with this script on it, in the VERY first scene.
 /// This gameobject is not supposed to have any UI widgets on it, it serves only as a container for your
 /// UI in the 3d game.
 /// 
@@ -46,24 +46,7 @@ public class UIManager : MonoBehaviour
 		else
 			Destroy(gameObject);
 	}
-
-
-	protected void Start()
-	{
-		List<string> a = new List<string>();
-		a.Add("d");
-		a.Add("e");
-		a.Add("f");
-
-		LazyIterator i = new LazyIterator();
-		string key = i.RegisterEnumerable(a, LazyIterator.IterativeMode.Loop);
-
-		Debug.Log(i.GetNext<string>(key));
-      	Debug.Log(i.GetNext<string>(key));
-    	Debug.Log(i.GetNext<string>(key));
-      	Debug.Log(i.GetNext<string>(key));
-	}
-
+		
 
 	/// <summary>
 	/// Assumes that UI script attached to a canvas gameobject has the same class name as the prefab name
@@ -92,6 +75,9 @@ public class UIManager : MonoBehaviour
     }
 
 
+	/// <summary>
+	/// Tells whether a UI canvas is already being shown.
+	/// </summary>
 	public bool IsShowingUI<T> () where T : Component
 	{
 		string typeName = typeof(T).Name;

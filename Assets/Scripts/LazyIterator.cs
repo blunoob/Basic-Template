@@ -35,6 +35,8 @@ public class LazyIterator
 		return enumerableKey;
 	}
 
+
+	//Returns next item in a sequence.
 	public T GetNext <T> (string enumerableKey)
 	{
 		if(!_collectionDictionary.ContainsKey(enumerableKey))
@@ -62,4 +64,23 @@ public class LazyIterator
 		public IEnumerable _enumerable;
 		public IEnumerator _enumerator;
 	}
+
+	/*
+
+	// Sample usage : 
+
+		List<string> a = new List<string>();
+		a.Add("d");
+		a.Add("e");
+		a.Add("f");
+
+		LazyIterator i = new LazyIterator();
+		string key = i.RegisterEnumerable(a, LazyIterator.IterativeMode.Loop);
+
+		Debug.Log(i.GetNext<string>(key));
+      	Debug.Log(i.GetNext<string>(key));
+    	Debug.Log(i.GetNext<string>(key));
+      	Debug.Log(i.GetNext<string>(key));
+
+	*/
 }

@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,12 +25,21 @@ public class LocalizationManager : MonoBehaviour
 
 	protected Dictionary<string, string> _languageDictionary;
 
+
+	#region PUBLIC API - The only methods you will need to call in your game. Everything happens behind the scenes.
+
+	/// <summary>
+	/// Loads the system language in memory.
+	/// </summary>
 	public void LoadLanguage()
 	{
 		LoadLanguage(Application.systemLanguage);
 	}
 
 
+	/// <summary>
+	/// Loads the language specified in parameters.
+	/// </summary>
 	public void LoadLanguage(SystemLanguage language)
 	{
 		_settings.LoadFromFile();
@@ -32,6 +47,9 @@ public class LocalizationManager : MonoBehaviour
 	}
 
 
+	/// <summary>
+	/// Gets the localized string for the string/key passed in as parameter.
+	/// </summary>
 	public string GetLocalizedString(string str)
 	{
 		if(!_languageDictionary.ContainsKey(str)) {
@@ -41,4 +59,5 @@ public class LocalizationManager : MonoBehaviour
 		return _languageDictionary[str];
 	}
 
+	#endregion
 }

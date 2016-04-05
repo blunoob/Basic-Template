@@ -9,12 +9,15 @@ using System.IO;
 using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A helper class for file IO related functions.
+/// </summary>
 public static class FileIO
 {
+	
 	public static void WriteToPersistentStorage(string fileName, string content)
 	{
 		string filePath = Application.persistentDataPath + "/" + fileName;
-
 		WriteToPath(filePath, content);
 	}
 
@@ -50,6 +53,7 @@ public static class FileIO
 		}
 	}
 
+
 	public static string ReadFromPath(string fileNameWithPath)
 	{
 		try
@@ -61,6 +65,7 @@ public static class FileIO
 		}
 		return null;
 	}
+
 
 	public static void DeleteFile(string fileWithPath)
 	{
