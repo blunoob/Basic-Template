@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class LocalizationEditor : EditorWindow 
 {
 	private const string SETTINGS_ASSET_KEY = "LocalizationSettings";
-//	private const string ASSET_PATH = "Assets/Localization/LocalizationSettings.asset";
+	private const string ASSET_PATH = "Assets/Localization/LocalizationSettings.asset";
 
 	private Vector2 _mainScrollPos = new Vector2(10, 10);
 
@@ -19,7 +19,16 @@ public class LocalizationEditor : EditorWindow
 	{
 		_mainWindow = EditorWindow.GetWindow<LocalizationEditor>(SETTINGS_ASSET_KEY);
 
-		LocalizationSettings asset = LocalizationSettings.GetSettings();
+		LocalizationSettings asset = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(ASSET_PATH);
+
+		if(asset == null) {
+			asset = ScriptableObject.CreateInstance<LocalizationSettings>();
+			asset.LoadFromFile();
+
+			AssetDatabase.CreateAsset(asset, ASSET_PATH);
+			AssetDatabase.SaveAssets();
+		}
+
 		_mainWindow.Focus();
 
 		EditorPrefs.SetString(SETTINGS_ASSET_KEY, AssetDatabase.GetAssetPath(asset));
@@ -134,6 +143,7 @@ public class LocalizationEditor : EditorWindow
 
 				EditorUtility.SetDirty(localeSettings);
 				AssetDatabase.SaveAssets();
+				AssetDatabase.Refresh();
 			}
 				
 			EditorGUILayout.EndHorizontal();
@@ -183,6 +193,7 @@ public class LocalizationEditor : EditorWindow
 			{
 				localeSettings.RemoveLanguage(localeSettings._localizedLanguages[i]);
 				SaveAsset(localeSettings);
+				AssetDatabase.Refresh();
 			}
 			EditorGUILayout.EndHorizontal();
 		}

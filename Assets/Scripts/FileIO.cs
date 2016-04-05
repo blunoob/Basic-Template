@@ -26,6 +26,12 @@ public static class FileIO
 	}
 
 
+	public static string ReadTextFromResources(string filePath)
+	{
+		return Resources.Load<TextAsset>(filePath).text;
+	}
+
+
 	public static bool ExistsInPersistentStorage(string fileName)
 	{
 		string filePath = Application.persistentDataPath + "/" + fileName;

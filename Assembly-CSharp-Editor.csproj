@@ -47,10 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\Localization\Editor\LanguageEditor.cs" />
      <Compile Include="Assets\Localization\Editor\LocalizationEditor.cs" />
-     <None Include="Assets\Localization\Data\Russian.txt" />
+     <None Include="Assets\Resources\Localization\Data\Defaults.txt" />
      <None Include="Assets\Resources\Prefabs\UI\ReadMe.txt" />
-     <None Include="Assets\Localization\Data\Arabic.txt" />
-     <None Include="Assets\Localization\Data\Defaults.txt" />
+     <None Include="Assets\Resources\Localization\Data\English.txt" />
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>/Applications/Unity_5_3_4/Unity_5_3_4.app/Contents/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>

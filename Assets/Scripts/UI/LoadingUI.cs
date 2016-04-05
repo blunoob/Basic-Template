@@ -17,7 +17,7 @@ public class LoadingUI : UIMonoBehaviour
 	static LoadingUI()
 	{
 		_tipMessages = new List<string>();
-		_tipMessages.Add("You can logout from the settings menu");
+		_tipMessages.Add("Yes");
 		_tipMessages.Add("Relax");
 		_tipMessages.Add("Flaming is discouraged.");
 	}
@@ -25,7 +25,7 @@ public class LoadingUI : UIMonoBehaviour
 
 	protected void Start()
 	{
-		_tipMessage.text = _tipMessages.GetRandom();
+		_tipMessage.text = LocalizationManager._instance.GetLocalizedString(_tipMessages.GetRandom());
 	}
 
 	public void Show()
@@ -38,7 +38,7 @@ public class LoadingUI : UIMonoBehaviour
 		if(!gameObject.activeInHierarchy)
 		{
 			gameObject.SetActive(true);
-			_tipMessage.text = tipMessage;
+			_tipMessage.text = LocalizationManager._instance.GetLocalizedString(tipMessage);
 		}
 	}
 }

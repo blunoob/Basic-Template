@@ -4,24 +4,20 @@ using System.Collections.Generic;
 
 public class LocalizationManager : MonoBehaviour 
 {
-	private static LocalizationManager instance;
-	public static LocalizationManager _instance
+	public LocalizationSettings _settings;
+
+	public static LocalizationManager _instance	{	get;	private set;	}
+
+	protected void Awake()
 	{
-		get
-		{
-			if(instance == null) {
-				GameObject localeObj = new GameObject("LocalizationManager");
-				DontDestroyOnLoad(localeObj);
-
-				instance = localeObj.AddComponent<LocalizationManager>();
-			}
-
-			return instance;
-		}
+		if(_instance == null) {
+			_instance = this;
+			DontDestroyOnLoad(gameObject);
+		} else
+			Destroy(gameObject);
 	}
 
 	protected Dictionary<string, string> _languageDictionary;
-
 
 	public void LoadLanguage()
 	{
@@ -31,16 +27,15 @@ public class LocalizationManager : MonoBehaviour
 
 	public void LoadLanguage(SystemLanguage language)
 	{
-		LocalizationSettings settings = LocalizationSettings.GetSettings();
-		settings.LoadFromFile();
-		_languageDictionary = settings.GetLanguageDictionary(language);
+		_settings.LoadFromFile();
+		_languageDictionary = _settings.GetLanguageDictionary(language);
 	}
 
 
 	public string GetLocalizedString(string str)
 	{
 		if(!_languageDictionary.ContainsKey(str)) {
-			Debug.LogWarning("Given String has no predefined key.");
+			Debug.LogWarning("Given string '" + str + "' has no predefined key.");
 			return str;
 		}
 		return _languageDictionary[str];

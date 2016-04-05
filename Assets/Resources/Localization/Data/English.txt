@@ -1,0 +1,1 @@
+{"Yes":"EYES","No":"ENO","Play":"EPLAY","Settings":null}

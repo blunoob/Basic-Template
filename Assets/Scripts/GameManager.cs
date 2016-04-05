@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 	{
 		if(_instance == null) {
 			_instance = this;
+			LocalizationManager._instance.LoadLanguage(SystemLanguage.English);
 			DontDestroyOnLoad(gameObject);
 		} else
 			Destroy(gameObject);
@@ -21,9 +22,6 @@ public class GameManager : MonoBehaviour
 	{
 		UIManager._instance.LoadUI<LoadingUI>(true);
 		this.PerformActionWithDelay(2f, ContinueGame);
-
-		LocalizationManager._instance.LoadLanguage();
-		Debug.Log("Arabic str > "+LocalizationManager._instance.GetLocalizedString("Yes"));
 	}
 
 	protected void ContinueGame ()
@@ -42,10 +40,10 @@ public class GameManager : MonoBehaviour
 		//TODO ... Put your code here. You may want to remove the following code.
 
 		UIManager._instance.DestroyUI<MainMenu>();
-		UIManager._instance.LoadUI<TwoButtonPopup>().Show("You sure?", "Yes", () => {
+		UIManager._instance.LoadUI<TwoButtonPopup>().Show("You sure?", LocalizationManager._instance.GetLocalizedString("Yes"), () => {
 			UIManager._instance.DestroyUI<TwoButtonPopup>();
 			ShowMenu();
-		}, "No", () => {
+		}, LocalizationManager._instance.GetLocalizedString("No"), () => {
 			UIManager._instance.DestroyUI<TwoButtonPopup>();
 			ShowMenu();
 		});

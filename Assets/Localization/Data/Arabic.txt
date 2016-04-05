@@ -1,1 +1,0 @@
-{"Yes":"AR YES","No":"AR NO","Play":"AR PLAY","Settings":null}
