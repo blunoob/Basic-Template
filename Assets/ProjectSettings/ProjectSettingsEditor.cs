@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/* 		
+		Author : Farhan
+		Skype : farhan.blu
+		Email : farhan.blu@gmail.com
+*/
+
+using UnityEngine;
 using UnityEditor;
 using System;
 using System.Collections;
@@ -27,6 +33,7 @@ public class ProjectSettingsEditor : Editor
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 	public override void OnInspectorGUI()
 	{
 		SavedProjectSettings myTarget = (SavedProjectSettings)target;
@@ -34,43 +41,38 @@ public class ProjectSettingsEditor : Editor
 		if(myTarget == null)
 			return;
 
+		//Any configuration added in 'SavedProjectSettings', make sure to write its code below so that it shows in the inspector.
 		DrawDownDrop<RenderingPath>(PlayerSettings.renderingPath.ToString(), ref myTarget._renderingPath);
+		DrawDownDrop<ColorSpace>(PlayerSettings.colorSpace.ToString(), ref myTarget._colorSpace);
 
+		if(GUILayout.Button("Apply Settings"))
+			myTarget.Apply();
 	}
 
 
-//	private void DrawDownDrop(string currentVal,ref RenderingPath myVar)
-//	{
-//		EditorGUILayout.BeginHorizontal();
-//
-//		EditorGUILayout.LabelField(myVar.GetType().Name);
-//
-//		EditorGUI.BeginDisabledGroup(true);
-//		EditorGUILayout.LabelField(currentVal);
-//		EditorGUI.EndDisabledGroup();
-//
-//		myVar = (RenderingPath)EditorGUILayout.EnumPopup(((Enum)myVar));
-//		EditorGUILayout.EndHorizontal();
-//	}
-
-	private void DrawDownDrop<T>(string currentVal,ref T myVar)
+	private void DrawDownDrop<T>(string currentVal, ref T myVar)
 	{
-		EditorGUILayout.BeginHorizontal(GUI.skin.customStyles[0], GUILayout.Width(100));
+		EditorGUILayout.BeginVertical(GUI.skin.customStyles[Toggle() ? 3 : 7]);
 
-		EditorGUILayout.LabelField(myVar.GetType().Name);
+		EditorGUILayout.LabelField("Setting : " + myVar.GetType().Name);
 
 		EditorGUI.BeginDisabledGroup(true);
-		EditorGUILayout.LabelField(currentVal);
+		EditorGUILayout.LabelField("Current : " + currentVal);
 		EditorGUI.EndDisabledGroup();
 
+		EditorGUILayout.BeginHorizontal();
+		EditorGUILayout.LabelField("Saved Setting : ");
 		myVar = (T)Enum.ToObject(typeof(T),EditorGUILayout.EnumPopup((Enum)(object)myVar));
 		EditorGUILayout.EndHorizontal();
+
+		EditorGUILayout.EndVertical();
 	}
 
-	private GUIStyle FixedWidthStyle()
+
+	protected bool _toggle;
+	protected bool Toggle()
 	{
-		GUIStyle s = new GUIStyle();
-		s.fixedWidth = 100;
-		return s;
+		_toggle = !_toggle;
+		return _toggle;
 	}
 }
