@@ -24,7 +24,7 @@ public class LocalizationEditor : EditorWindow
 
 	protected static EditorWindow _mainWindow;
 
-	[MenuItem ("Window/LocalizationManager")]
+	[MenuItem ("Window/CommonModules/LocalizationManager")]
 	public static void Show()
 	{
 		_mainWindow = EditorWindow.GetWindow<LocalizationEditor>(SETTINGS_ASSET_KEY);

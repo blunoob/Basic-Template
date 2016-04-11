@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
 	protected void Start()
 	{
+		
 		//It will be a good idea to just save a reference to the uimanager here and use it henceforth.
 		UIManager._instance.LoadUI<LoadingUI>(true);
 
@@ -64,5 +65,7 @@ public class GameManager : MonoBehaviour
 			UIManager._instance.DestroyUI<TwoButtonPopup>();
 			ShowMenu();
 		});
+
+
 	}
 }

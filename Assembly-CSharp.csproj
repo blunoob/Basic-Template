@@ -48,6 +48,8 @@
      <Compile Include="Assets\Library\MiniJSON.cs" />
      <Compile Include="Assets\Localization\LocalizationManager.cs" />
      <Compile Include="Assets\Localization\LocalizationSettings.cs" />
+     <Compile Include="Assets\ProjectSettings\ProjectSettingsEditor.cs" />
+     <Compile Include="Assets\ProjectSettings\SavedProjectSettings.cs" />
      <Compile Include="Assets\Scripts\Extensions\Extensions.cs" />
      <Compile Include="Assets\Scripts\FileIO.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -58,6 +60,8 @@
      <Compile Include="Assets\Scripts\UI\TwoButtonPopup.cs" />
      <Compile Include="Assets\Scripts\UI\UIManager.cs" />
      <Compile Include="Assets\Scripts\UI\UIMonoBehaviour.cs" />
+     <Compile Include="Assets\Test\SeparatorAttribute.cs" />
+     <Compile Include="Assets\Test\SeparatorDrawer.cs" />
      <None Include="Assets\Resources\Localization\Data\Defaults.txt" />
      <None Include="Assets\Resources\Prefabs\UI\ReadMe.txt" />
      <None Include="Assets\Resources\Localization\Data\English.txt" />
